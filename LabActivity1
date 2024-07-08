@@ -1,0 +1,130 @@
+// Sayat, Pauleen Joy B., CS - 1302
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct node{
+    int data;
+    node *next;
+};
+
+class linkedList{
+private:
+    node *head, *tail;
+    
+public:
+    linkedList(){
+    head = NULL;
+    tail = NULL;
+    }
+
+    void insertAtBeginning(int v){
+        node *temp = new node;
+        temp -> data = v;
+        temp ->next = head;
+        head = temp;
+    }
+    
+    void insertAtEnd(int n){
+        node *tmp = new node;
+        tmp->data = n;
+        tmp->next = NULL;
+        
+        if (head == NULL){
+            head = tmp;
+            tail = tmp;
+        } else{
+            tail->next = tmp;
+            tail = tail->next;
+        }
+    }
+    
+    void insertAfter(int pos, int v){
+        node *pre = new node;
+        node *cur = new node;
+        node *temp = new node;
+        cur = head;
+        for (int i = 1; i < pos; i++){
+            pre = cur;
+            cur = cur -> next;
+        }
+        temp->data = v;
+        pre->next = temp;
+        temp->next = cur;
+    }
+    
+    void deleteNode(int pos){
+        node *cur = new node;
+        node *pre = new node;
+        cur = head;
+        for (int i = 1; i < pos; i++){
+            pre = cur;
+            cur = cur -> next;
+        }
+        pre->next = cur->next;
+        delete cur;
+    }
+    
+    void printList(){
+        node *temp = head;
+        while(temp != NULL){
+            cout << temp -> data << endl;
+            temp = temp -> next;
+        }
+        cout << endl;
+    }
+};
+
+
+int main() {
+    linkedList a;
+    int choice, value, pos;
+    
+    while(true){
+        cout << "MENU" << endl;
+        cout << "1. Insert at the beginning" << endl;
+        cout << "2. Insert at the end"<< endl;
+        cout << "3. Insert after a specified position"<< endl;
+        cout << "4. Delete a node at a position" << endl;
+        cout << "5. Print all elements" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        
+        switch(choice){
+            case 1:
+                cout << "Enter value to insert at the beginning: ";
+                cin >> value;
+                a.insertAtBeginning(value);
+                break;
+            case 2:
+                cout << "Enter value to insert at the end: ";
+                cin >> value;        
+                a.insertAtEnd(value);
+                break;
+            case 3:
+                cout << "Enter desired position: ";
+                cin >> pos;
+                cout << "Enter value to insert: ";
+                cin >> value;
+                a.insertAfter(pos, value);
+                break;
+            case 4:
+                cout << "Enter position to delete: ";
+                cin >> pos;
+                break;
+            case 5:
+                cout << "Linked List:\n";
+                a.printList();
+                break;
+            case 6:
+                cout << "Bye :) ";
+                break;
+            default:
+                cout << "Invalid value. Try again."<< endl;
+                break;
+        }
+    }
+
+    return 0;
+}
